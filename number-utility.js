@@ -1,4 +1,4 @@
-export class numberUtility {
+export class NumberUtility {
     getRandomInt (fromInclusive, toExclusive) {
         if (fromInclusive >= toExclusive) {
             throw new Error('From must be less then to')

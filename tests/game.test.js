@@ -1,5 +1,5 @@
-import {Game} from "./game.js";
-import {GameStatuses} from "./gameStatuses.js";
+import {Game} from "../game.js";
+import {GameStatuses} from "../gameStatuses.js";
 
 describe('game', () => {
     it('should have Pending status after creating', () => {
@@ -38,6 +38,24 @@ describe('game', () => {
         expect(() => {
             game.googleJumpInterval = -1000;
         }).toThrow(Error);
+    });
+    it('should stop game and set status to COMPLETED', () => {
+        const game = new Game();
+        game.start();
+        game.stop();
+        expect(game.status).toBe(GameStatuses.COMPLETED);
+    });
+
+    it('should clear interval after stop', async () => {
+        const game = new Game();
+        game.googleJumpInterval = 10;
+        game.start();
+
+        const scoreBefore = game.googleScore;
+        game.stop();
+
+        await delay(50);
+        expect(game.googleScore).toBe(scoreBefore);
     });
 })
 
